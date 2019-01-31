@@ -56,18 +56,18 @@ class Transport(BaseInboundTransport):
                     except json.decoder.JSONDecodeError as e:
                         error_message = f"Could not parse message json: {str(e)}"
                         self.logger.error(error_message)
-                        await ws.send_json({"success": False, "message": error_message})
+                        await ws.send_json({"error": error_message})
                         continue
 
                     try:
                         # Route message and provide connection instance as means to respond
                         result = await self.message_router(message_dict)
-                        await ws.send_json({"success": True, "message": result})
+                        await ws.send_json(result)
 
                     except Exception as e:
                         error_message = f"Error handling message: {str(e)}"
                         self.logger.error(error_message)
-                        await ws.send_json({"success": False, "message": error_message})
+                        await ws.send_json({"error": error_message})
                         continue
 
             elif msg.type == WSMsgType.ERROR:

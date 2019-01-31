@@ -3,6 +3,9 @@ import logging
 from typing import Callable
 
 from ...base_handler import BaseHandler
+from ....wallet.base import BaseWallet
+
+from ..messages.state import State, StateContent
 
 # from ..messages.connection_invitation import StateRequest
 
@@ -12,7 +15,6 @@ class StateRequestHandler(BaseHandler):
         self.logger = logging.getLogger(__name__)
         self.message = message
 
-    def handle(self, thread_state):
-        self.logger.debug(
-            "StateRequestHandler called with thread_state " + f"{thread_state}"
-        )
+    async def handle(self, wallet: BaseWallet) -> State:
+        message = State(content=StateContent(initialized=False))
+        return message

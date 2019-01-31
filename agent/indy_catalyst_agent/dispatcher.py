@@ -9,6 +9,7 @@ from .storage.base import BaseStorage
 from .messaging.agent_message import AgentMessage
 from .transport.outbound.message import OutboundMessage
 from .connection import Connection
+from .wallet.basic import BasicWallet
 
 
 class Dispatcher:
@@ -17,39 +18,43 @@ class Dispatcher:
         self.storage = storage
 
     async def dispatch(self, message: AgentMessage, send):
+
+        wallet = BasicWallet()
+        result_message = await message.handler.handle(wallet)
+        return result_message
+
         # TODO:
         # Create an instance of some kind of "ThreadState" or "Context"
         # using a thread id found in the message data. Messages do not
         # yet have the notion of threading
-        context = {}
+        # context = {}
 
-        # Create "connection"
+        # # Create "connection"
 
-        # pack/unpack
+        # # pack/unpack
 
-        message.handler.handle(context)
+        # message.handler.handle(context)
 
-        # 1. get handler result
-        # 1a. Possibly communicate with service backend for instructions
-        # 2. based on some logic, build a response message
+        # # 1. get handler result
+        # # 1a. Possibly communicate with service backend for instructions
+        # # 2. based on some logic, build a response message
 
-        handler_response = message  # echo for now
+        # handler_response = message  # echo for now
 
-        # conn = Connection(endpoint="wss://0bc6628c.ngrok.io")
-        conn1 = Connection(endpoint="http://25566605.ngrok.io")
-        conn2 = Connection(endpoint="https://httpbin.org/status/400")
+        # # conn = Connection(endpoint="wss://0bc6628c.ngrok.io")
+        # conn1 = Connection(endpoint="http://25566605.ngrok.io")
+        # conn2 = Connection(endpoint="https://httpbin.org/status/400")
 
-        # Potentially multicast to multiple 
-        await send(handler_response, conn1)
-        await send(handler_response, conn2)
+        # # Potentially multicast to multiple
+        # await send(handler_response, conn1)
+        # await send(handler_response, conn2)
 
+        # # We also return the result to the caller.
+        # # This is for persistent connections waiting on that response.
+        # return handler_response
 
-        # We also return the result to the caller.
-        # This is for persistent connections waiting on that response.
-        return handler_response
+        # # await send(OutboundMessage(uri="https://httpbin.org/status/200", data=None))
+        # # await send(OutboundMessage(uri="https://httpbin.org/status/200", data=None))
 
-        # await send(OutboundMessage(uri="https://httpbin.org/status/200", data=None))
-        # await send(OutboundMessage(uri="https://httpbin.org/status/200", data=None))
-
-        # await connection.send_message(handler_response)
+        # # await connection.send_message(handler_response)
 

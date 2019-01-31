@@ -9,5 +9,5 @@ class BaseHandler(ABC):
         pass
 
     @abstractmethod
-    def handle(self) -> None:
+    async def handle(self) -> AgentMessage:
         pass

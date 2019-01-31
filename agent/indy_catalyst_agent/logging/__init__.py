@@ -17,7 +17,7 @@ class LoggingConfigurator:
                 path.dirname(path.abspath(__file__)), "default_logging_config.ini"
             )
 
-        fileConfig(config_path, disable_existing_loggers=True)
+        fileConfig(config_path, disable_existing_loggers=False)
 
         if log_level:
             log_level = log_level.upper()

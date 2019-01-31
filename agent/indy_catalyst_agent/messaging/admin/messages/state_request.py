@@ -5,16 +5,19 @@ from typing import List, Text
 
 from marshmallow import Schema, fields, post_load
 
-from ...agent_message import AgentMessage
+from ...agent_message import HandleableAgentMessage
 from ...message_types import MessageTypes
 
 from ..handlers.state_request_handler import StateRequestHandler
 
 
-class StateRequest(AgentMessage):
+class StateRequest(HandleableAgentMessage):
     def __init__(self, content):
-        self.handler = StateRequestHandler(self)
         self._content = content
+
+    @property
+    def handler(self):
+        return StateRequestHandler(self)
 
     @property
     # Avoid clobbering builtin property
@@ -37,7 +40,7 @@ class StateRequest(AgentMessage):
 class StateRequestSchema(Schema):
     # Avoid clobbering builtin property
     _type = fields.Str(data_key="@type", required=True)
-    content = fields.Dict(data_key="content", allow_none=True)
+    content = fields.Constant(None, allow_none=True)
 
     @post_load
     def make_model(self, data: dict) -> StateRequest:
