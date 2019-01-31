@@ -8,7 +8,7 @@ from ...agent_message import AgentMessage
 from ...message_types import MessageTypes
 from ...validators import must_not_be_none
 
-from ....models.agent_endpoint import AgentEndpoint, AgentEndpointSchema
+from .nested.agent_endpoint import AgentEndpoint, AgentEndpointSchema
 
 
 class ConnectionRequest(AgentMessage):

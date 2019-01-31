@@ -10,7 +10,7 @@ from ...validators import must_not_be_none
 
 from ..handlers.connection_invitation_handler import ConnectionInvitationHandler
 
-from ....models.agent_endpoint import AgentEndpoint, AgentEndpointSchema
+from .nested.agent_endpoint import AgentEndpoint, AgentEndpointSchema
 
 
 class ConnectionInvitation(AgentMessage):

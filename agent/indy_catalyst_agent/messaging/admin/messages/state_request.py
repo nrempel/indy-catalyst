@@ -1,30 +1,30 @@
 """
 Represents a state request
 """
-from typing import Text
+from typing import List, Text
 
 from marshmallow import Schema, fields, post_load
 
 from ...agent_message import AgentMessage
 from ...message_types import MessageTypes
-from ...validators import must_not_be_none
 
 from ..handlers.state_request_handler import StateRequestHandler
 
-from ....models.agent_endpoint import AgentEndpoint, AgentEndpointSchema
-
 
 class StateRequest(AgentMessage):
-    def __init__(self, initialized: bool, agent_name: Text):
+    def __init__(self, content):
         self.handler = StateRequestHandler(self)
-
-        self.initialized = initialized
-        self.agent_name = agent_name
+        self._content = content
 
     @property
     # Avoid clobbering builtin property
     def _type(self) -> str:
         return MessageTypes.ADMIN_STATE_REQUEST.value
+
+    @property
+    # Avoid clobbering builtin property
+    def content(self) -> str:
+        return self._content
 
     @classmethod
     def deserialize(cls, obj):
@@ -37,10 +37,8 @@ class StateRequest(AgentMessage):
 class StateRequestSchema(Schema):
     # Avoid clobbering builtin property
     _type = fields.Str(data_key="@type", required=True)
+    content = fields.Dict(data_key="content", allow_none=True)
 
-    initialized = fields.Bool(required=True)
-    agent_name = fields.Str(required=True)
-    
     @post_load
     def make_model(self, data: dict) -> StateRequest:
         del data["_type"]
