@@ -1,7 +1,9 @@
 from .message_types import MessageTypes
 
 
-from .admin.messages.state_request import StateRequest
+from .admin.base.messages.state_request import StateRequest
+
+from .admin.wallet_connection.messages.connect import Connect
 
 from .connections.messages.connection_invitation import ConnectionInvitation
 from .connections.messages.connection_request import ConnectionRequest
@@ -37,9 +39,13 @@ class MessageFactory:
         if not obj.get("@type"):
             raise MessageParseError("Message does not contain '@type' parameter")
 
-        # Admin Messages
-        if obj["@type"] == MessageTypes.ADMIN_STATE_REQUEST.value:
+        # Admin Base Messages
+        if obj["@type"] == MessageTypes.ADMIN_BASE_STATE_REQUEST.value:
             return StateRequest.deserialize(obj)
+
+        # Admin Wallet Connection Messages
+        if obj["@type"] == MessageTypes.ADMIN_WALLET_CONNECTION_CONNECT.value:
+            return Connect.deserialize(obj)
 
         # Connection Messages
         if obj["@type"] == MessageTypes.CONNECTION_INVITATION.value:

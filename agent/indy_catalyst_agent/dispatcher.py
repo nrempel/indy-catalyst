@@ -19,6 +19,8 @@ class Dispatcher:
 
     async def dispatch(self, message: AgentMessage, send):
 
+        # TODO: move wallet type selection to conductor and pass in 
+        #       class to be instantiated
         wallet = BasicWallet()
         result_message = await message.handler.handle(wallet)
         return result_message

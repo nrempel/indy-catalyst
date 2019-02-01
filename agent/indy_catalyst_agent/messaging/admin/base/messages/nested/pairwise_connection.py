@@ -2,7 +2,7 @@ from typing import Text
 
 from marshmallow import Schema, fields
 
-from ....validators import must_not_be_none
+from .....validators import must_not_be_none
 
 
 class Metadata:

@@ -5,8 +5,8 @@ from typing import List, Text
 
 from marshmallow import Schema, fields, post_load
 
-from ...agent_message import HandleableAgentMessage
-from ...message_types import MessageTypes
+from ....agent_message import HandleableAgentMessage
+from ....message_types import MessageTypes
 
 from ..handlers.state_request_handler import StateRequestHandler
 
@@ -22,7 +22,7 @@ class StateRequest(HandleableAgentMessage):
     @property
     # Avoid clobbering builtin property
     def _type(self) -> str:
-        return MessageTypes.ADMIN_STATE_REQUEST.value
+        return MessageTypes.ADMIN_BASE_STATE_REQUEST.value
 
     @property
     # Avoid clobbering builtin property

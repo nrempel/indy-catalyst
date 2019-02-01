@@ -9,7 +9,9 @@ from typing import Sequence
 
 DIDInfo = namedtuple("DIDInfo", "did verkey metadata")
 
-PairwiseInfo = namedtuple("PairwiseInfo", "their_did their_verkey my_did my_verkey metadata")
+PairwiseInfo = namedtuple(
+    "PairwiseInfo", "their_did their_verkey my_did my_verkey metadata"
+)
 
 
 class BaseWallet(ABC):
@@ -60,19 +62,10 @@ class BaseWallet(ABC):
 
     @abstractmethod
     async def create_local_did(
-            self,
-            seed: str = None,
-            did: str = None,
-            metadata: dict = None) -> DIDInfo:
+        self, seed: str = None, did: str = None, metadata: dict = None
+    ) -> DIDInfo:
         """
         Create and store a new local DID
-        """
-        pass
-
-    @abstractmethod
-    async def get_local_dids(self) -> Sequence[DIDInfo]:
-        """
-        Get list of defined local DIDs
         """
         pass
 
@@ -99,11 +92,12 @@ class BaseWallet(ABC):
 
     @abstractmethod
     async def create_pairwise(
-            self,
-            their_did: str,
-            their_verkey: str,
-            my_did: str = None,
-            metadata: dict = None) -> PairwiseInfo:
+        self,
+        their_did: str,
+        their_verkey: str,
+        my_did: str = None,
+        metadata: dict = None,
+    ) -> PairwiseInfo:
         """
         Create a new pairwise DID for a secure connection
         """
@@ -145,7 +139,9 @@ class BaseWallet(ABC):
         pass
 
     @abstractmethod
-    async def verify_message(self, message: bytes, signature: bytes, from_verkey: str) -> bool:
+    async def verify_message(
+        self, message: bytes, signature: bytes, from_verkey: str
+    ) -> bool:
         """
         Verify a signature against the public key of the signer
         """
@@ -153,10 +149,8 @@ class BaseWallet(ABC):
 
     @abstractmethod
     async def pack_message(
-            self,
-            message: str,
-            to_verkeys: Sequence[str],
-            from_verkey: str = None) -> bytes:
+        self, message: str, to_verkeys: Sequence[str], from_verkey: str = None
+    ) -> bytes:
         """
         Pack a message for one or more recipients
         """
@@ -168,7 +162,6 @@ class BaseWallet(ABC):
         Unpack a message
         """
         pass
-
 
     # TODO:
     # store credential (return ID)

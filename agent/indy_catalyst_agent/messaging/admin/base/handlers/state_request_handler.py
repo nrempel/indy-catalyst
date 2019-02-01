@@ -2,8 +2,8 @@ import logging
 
 from typing import Callable
 
-from ...base_handler import BaseHandler
-from ....wallet.base import BaseWallet
+from ....base_handler import BaseHandler
+from .....wallet.base import BaseWallet
 
 from ..messages.state import State, StateContent
 

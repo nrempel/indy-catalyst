@@ -5,9 +5,9 @@ from typing import Dict, List, Text
 
 from marshmallow import Schema, fields, post_load
 
-from ...agent_message import AgentMessage
-from ...message_types import MessageTypes
-from ...validators import must_not_be_none
+from ....agent_message import AgentMessage
+from ....message_types import MessageTypes
+from ....validators import must_not_be_none
 
 from .nested.pairwise_connection import PairwiseConnection, PairwiseConnectionSchema
 
@@ -40,7 +40,7 @@ class State(AgentMessage):
     @property
     # Avoid clobbering builtin property
     def _type(self) -> str:
-        return MessageTypes.ADMIN_STATE.value
+        return MessageTypes.ADMIN_BASE_STATE.value
 
     @property
     def content(self) -> Dict:

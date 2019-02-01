@@ -1,9 +1,12 @@
 from enum import Enum
 
 class MessageTypes(Enum):
-    # Admin Messages
-    ADMIN_STATE_REQUEST = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/admin/1.0/state_request"
-    ADMIN_STATE = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/admin/1.0/state"
+    # Admin Base Messages
+    ADMIN_BASE_STATE_REQUEST = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/admin/1.0/state_request"
+    ADMIN_BASE_STATE = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/admin/1.0/state"
+
+    # Admin Wallet Connection Messages
+    ADMIN_WALLET_CONNECTION_CONNECT = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/admin_walletconnection/1.0/connect"
 
     # Connection Messages
     CONNECTION_INVITATION = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/connections/1.0/invitation"
