@@ -18,11 +18,13 @@ class StateContent:
         initialized: bool,
         agent_name: Text = None,
         pairwise_connections: List[PairwiseConnection] = None,
+        invitations: List = None,
     ):
 
         self.initialized = initialized
         self.agent_name = agent_name
         self.pairwise_connections = pairwise_connections
+        self.invitations = invitations
 
 
 class StateContentSchema(Schema):
@@ -31,6 +33,7 @@ class StateContentSchema(Schema):
     pairwise_connections = fields.Nested(
         PairwiseConnectionSchema, many=True, validate=must_not_be_none, required=True
     )
+    invitations = fields.Constant([])
 
 
 class State(AgentMessage):
