@@ -10,6 +10,7 @@ from .messaging.agent_message import AgentMessage
 from .transport.outbound.message import OutboundMessage
 from .connection import Connection
 from .wallet.basic import BasicWallet
+from .storage.basic import BasicStorage
 
 
 class Dispatcher:
@@ -19,10 +20,11 @@ class Dispatcher:
 
     async def dispatch(self, message: AgentMessage, send):
 
-        # TODO: move wallet type selection to conductor and pass in 
+        # TODO: move wallet type selection to conductor and pass in
         #       class to be instantiated
         wallet = BasicWallet()
-        result_message = await message.handler.handle(wallet)
+        storage = BasicStorage()
+        result_message = await message.handler.handle(wallet, storage)
         return result_message
 
         # TODO:

@@ -34,8 +34,7 @@ class GenerateInviteHandler(BaseHandler):
 
         did_info = await wallet.create_local_did()
 
-        # TODO:
-
+        # TODO: store connection data
         invite = ConnectionInvitation(
             endpoint=public_url, label="label", key=did_info.verkey
         )

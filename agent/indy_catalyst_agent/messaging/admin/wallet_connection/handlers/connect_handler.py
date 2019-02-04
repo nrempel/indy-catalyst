@@ -4,6 +4,7 @@ from typing import Callable
 
 from ....base_handler import BaseHandler
 from .....wallet.base import BaseWallet
+from .....storage.base import BaseStorage
 
 from ...base.messages.state import State, StateContent
 
@@ -15,7 +16,7 @@ class ConnectHandler(BaseHandler):
         self.logger = logging.getLogger(__name__)
         self.message = message
 
-    async def handle(self, wallet: BaseWallet) -> State:
+    async def handle(self, wallet: BaseWallet, storage: BaseStorage) -> State:
         await wallet.open()
 
         initialized = wallet.opened

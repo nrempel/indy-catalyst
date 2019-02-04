@@ -39,6 +39,9 @@ class Transport(BaseInboundTransport):
             )
 
     async def inbound_message_handler(self, request):
+        body_text = await request.text()
+        self.logger.info(f"Received message: {body_text}")
+        
         try:
             body = await request.json()
         except json.decoder.JSONDecodeError as e:
