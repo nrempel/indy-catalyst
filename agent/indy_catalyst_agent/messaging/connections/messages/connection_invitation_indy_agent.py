@@ -17,14 +17,11 @@ from .nested.agent_endpoint import AgentEndpoint, AgentEndpointSchema
 
 
 class ConnectionInvitation(AgentMessage):
-    def __init__(self, endpoint: str, label: str, key: str = None):
+    def __init__(self, endpoint: str, label: str, key: str):
         self.handler = ConnectionInvitationHandler(self)
         self.endpoint = endpoint
         self.label = label
-        if not key:
-            self.key = uuid4()
-        else:
-            self.key = key
+        self.key = key
 
     @property
     # Avoid clobbering builtin property
@@ -49,7 +46,7 @@ class ConnectionInvitationSchema(Schema):
     _type = fields.Str(data_key="@type", required=True)
     endpoint = fields.Str(required=True)
     label = fields.Str(required=True)
-    key = fields.UUID(required=True)
+    key = fields.Str(required=True)
 
     @post_load
     def make_model(self, data: dict) -> ConnectionInvitation:
