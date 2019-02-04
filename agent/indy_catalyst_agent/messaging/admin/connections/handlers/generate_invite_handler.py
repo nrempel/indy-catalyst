@@ -32,11 +32,11 @@ class GenerateInviteHandler(BaseHandler):
         # TODO: make this cli param or something
         public_url = "http://172.17.0.1:10001"
 
-        did_info = await wallet.create_local_did()
+        key_info = await wallet.create_signing_key()
 
         # TODO: store connection data
         invite = ConnectionInvitation(
-            endpoint=public_url, label="label", key=did_info.verkey
+            endpoint=public_url, label="label", key=key_info.verkey
         )
 
         invite_encoded = invite.base64_encode()
