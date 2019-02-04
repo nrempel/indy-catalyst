@@ -5,6 +5,8 @@ from .admin.base.messages.state_request import StateRequest
 
 from .admin.wallet_connection.messages.connect import Connect
 
+from .admin.connections.messages.generate_invite import GenerateInvite
+
 from .connections.messages.connection_invitation import ConnectionInvitation
 from .connections.messages.connection_request import ConnectionRequest
 from .connections.messages.connection_response import ConnectionResponse
@@ -46,6 +48,10 @@ class MessageFactory:
         # Admin Wallet Connection Messages
         if obj["@type"] == MessageTypes.ADMIN_WALLET_CONNECTION_CONNECT.value:
             return Connect.deserialize(obj)
+
+        # Admin Connection Messages
+        if obj["@type"] == MessageTypes.ADMIN_CONNECTION_GENERATE_INVITE.value:
+            return GenerateInvite.deserialize(obj)
 
         # Connection Messages
         if obj["@type"] == MessageTypes.CONNECTION_INVITATION.value:

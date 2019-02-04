@@ -8,8 +8,13 @@ class MessageTypes(Enum):
     # Admin Wallet Connection Messages
     ADMIN_WALLET_CONNECTION_CONNECT = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/admin_walletconnection/1.0/connect"
 
+    # Admin Connection Messages
+    ADMIN_CONNECTION_GENERATE_INVITE = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/admin_connections/1.0/generate_invite"
+    ADMIN_CONNECTION_INVITE_GENERATED = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/admin_connections/1.0/invite_generated"
+
     # Connection Messages
-    CONNECTION_INVITATION = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/connections/1.0/invitation"
+    # CONNECTION_INVITATION = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/connections/1.0/invitation"
+    CONNECTION_INVITE = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/connections/1.0/invite"
     CONNECTION_REQUEST = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/connections/1.0/request"
     CONNECTION_RESPONSE = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/connections/1.0/response"
 
