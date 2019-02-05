@@ -7,7 +7,8 @@ from .admin.wallet_connection.messages.connect import Connect
 
 from .admin.connections.messages.generate_invite import GenerateInvite
 
-from .connections.messages.connection_invitation import ConnectionInvitation
+# from .connections.messages.connection_invitation import ConnectionInvitation
+from .connections.messages.connection_invitation_indy_agent import ConnectionInvitation
 from .connections.messages.connection_request import ConnectionRequest
 from .connections.messages.connection_response import ConnectionResponse
 
@@ -54,7 +55,9 @@ class MessageFactory:
             return GenerateInvite.deserialize(obj)
 
         # Connection Messages
-        if obj["@type"] == MessageTypes.CONNECTION_INVITATION.value:
+        # if obj["@type"] == MessageTypes.CONNECTION_INVITATION.value:
+        #     return ConnectionInvitation.deserialize(obj)
+        elif obj["@type"] == MessageTypes.CONNECTION_INVITE.value:
             return ConnectionInvitation.deserialize(obj)
         elif obj["@type"] == MessageTypes.CONNECTION_REQUEST.value:
             return ConnectionRequest.deserialize(obj)

@@ -4,6 +4,7 @@ over the network, communicating with the ledger, passing messages to handlers,
 and storing data in the wallet.
 """
 
+import json
 import logging
 
 from base64 import b64decode
@@ -67,19 +68,22 @@ class Conductor:
         )
 
     async def inbound_message_router(self, wire_message_dict: Dict) -> None:
+        self.logger.info(wire_message_dict)
         try:
             # We accept plaintext message for the ui
             message = MessageFactory.make_message(wire_message_dict)
         except MessageParseError:
             message_bytes = b64decode(wire_message_dict["payload"])
-            agent_message_dict, from_verkey = await self.wallet.decrypt_message(
+            agent_message_bytes, from_verkey = await self.wallet.decrypt_message(
                 message_bytes, wire_message_dict["to"], True
             )
+            agent_message_dict = json.loads(agent_message_bytes.decode("utf8"))
 
             self.logger.info(agent_message_dict)
-            self.logger.info(from_verkey)
 
             message = MessageFactory.make_message(agent_message_dict)
+
+            self.logger.info(message)
 
         result = await self.dispatcher.dispatch(message, self.outbound_message_router)
         # TODO: need to use callback instead?
