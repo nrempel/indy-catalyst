@@ -6,17 +6,19 @@ and storing data in the wallet.
 
 import logging
 
+from base64 import b64decode
 from typing import Dict
 
 from .dispatcher import Dispatcher
 from .logging import LoggingConfigurator
 from .storage.basic import BasicStorage
 from .messaging.agent_message import AgentMessage
-from .messaging.message_factory import MessageFactory
+from .messaging.message_factory import MessageFactory, MessageParseError
 from .transport.inbound import InboundTransportConfiguration
 from .transport.inbound.manager import InboundTransportManager
 from .transport.outbound.manager import OutboundTransportManager
 from .transport.outbound.queue.basic import BasicOutboundMessageQueue
+from .wallet.basic import BasicWallet
 
 
 class Conductor:
@@ -29,8 +31,10 @@ class Conductor:
 
     async def start(self) -> None:
         # TODO: make storage type configurable via cli params
-        storage = BasicStorage()
-        self.dispatcher = Dispatcher(storage)
+        self.wallet = BasicWallet()
+        self.storage = BasicStorage()
+
+        self.dispatcher = Dispatcher(self.wallet, self.storage)
 
         # Register all inbound transports
         self.inbound_transport_manager = InboundTransportManager()
@@ -62,8 +66,21 @@ class Conductor:
             self.outbound_transport_manager.registered_transports,
         )
 
-    async def inbound_message_router(self, message_dict: Dict) -> None:
-        message = MessageFactory.make_message(message_dict)
+    async def inbound_message_router(self, wire_message_dict: Dict) -> None:
+        try:
+            # We accept plaintext message for the ui
+            message = MessageFactory.make_message(wire_message_dict)
+        except MessageParseError:
+            message_bytes = b64decode(wire_message_dict["payload"])
+            agent_message_dict, from_verkey = await self.wallet.decrypt_message(
+                message_bytes, wire_message_dict["to"], True
+            )
+
+            self.logger.info(agent_message_dict)
+            self.logger.info(from_verkey)
+
+            message = MessageFactory.make_message(agent_message_dict)
+
         result = await self.dispatcher.dispatch(message, self.outbound_message_router)
         # TODO: need to use callback instead?
         #       respond immediately after message parse in case of req-res transport?

@@ -5,26 +5,29 @@ hook callbacks storing state for message threads, etc.
 
 import logging
 
+from typing import Callable
+
 from .storage.base import BaseStorage
+from .wallet.base import BaseWallet
+
 from .messaging.agent_message import AgentMessage
 from .transport.outbound.message import OutboundMessage
 from .connection import Connection
 from .wallet.basic import BasicWallet
 from .storage.basic import BasicStorage
+from .wallet.basic import BasicWallet
 
 
 class Dispatcher:
-    def __init__(self, storage: BaseStorage):  # TODO: take in wallet impl as well
+    def __init__(
+        self, wallet: BaseWallet, storage: BaseStorage
+    ):  # TODO: take in wallet impl as well
         self.logger = logging.getLogger(__name__)
+        self.wallet = wallet
         self.storage = storage
 
-    async def dispatch(self, message: AgentMessage, send):
-
-        # TODO: move wallet type selection to conductor and pass in
-        #       class to be instantiated
-        wallet = BasicWallet()
-        storage = BasicStorage()
-        result_message = await message.handler.handle(wallet, storage)
+    async def dispatch(self, message: AgentMessage, message_sender: Callable):
+        result_message = await message.handler.handle(self.wallet, self.storage)
         return result_message
 
         # TODO:
