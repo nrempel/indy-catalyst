@@ -11,11 +11,6 @@ from ...message_types import MessageTypes
 
 from ..handlers.connection_invitation_handler import ConnectionInvitationHandler
 
-<<<<<<< HEAD
-from .nested.agent_endpoint import AgentEndpoint, AgentEndpointSchema
-
-=======
->>>>>>> master
 
 class ConnectionInvitation(AgentMessage):
     class Meta:
