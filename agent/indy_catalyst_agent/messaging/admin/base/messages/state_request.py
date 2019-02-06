@@ -5,13 +5,13 @@ from typing import List, Text
 
 from marshmallow import Schema, fields, post_load
 
-from ....agent_message import HandleableAgentMessage
+from ....agent_message import AgentMessage
 from ....message_types import MessageTypes
 
 from ..handlers.state_request_handler import StateRequestHandler
 
 
-class StateRequest(HandleableAgentMessage):
+class StateRequest(AgentMessage):
     def __init__(self, content):
         self._content = content
 

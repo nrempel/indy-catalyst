@@ -6,7 +6,7 @@ from ....base_handler import BaseHandler
 from .....wallet.base import BaseWallet
 from .....storage.base import BaseStorage
 
-from ....connections.messages.connection_invitation_indy_agent import (
+from ....connections_indy_agent.messages.connection_invitation_indy_agent import (
     ConnectionInvitation
 )
 
