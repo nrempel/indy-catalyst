@@ -54,6 +54,7 @@ class Transport(BaseInboundTransport):
         try:
             await self.message_router(body)
         except Exception as e:
+            self.logger.error(e)
             error_message = f"Error handling message: {str(e)}"
             self.logger.error(error_message)
             return web.json_response(

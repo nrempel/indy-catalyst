@@ -9,7 +9,7 @@ from .admin.connections.messages.generate_invite import GenerateInvite
 
 # from .connections.messages.connection_invitation import ConnectionInvitation
 # from .connections.messages.connection_invitation_indy_agent import ConnectionInvitation
-from .connections.messages.connection_request import ConnectionRequest
+from .connections_indy_agent.messages.connection_request import ConnectionRequest
 from .connections.messages.connection_response import ConnectionResponse
 
 from .credentials.messages.credential_offer import CredentialOffer

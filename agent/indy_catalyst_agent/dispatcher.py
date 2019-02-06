@@ -19,14 +19,17 @@ from .wallet.basic import BasicWallet
 
 
 class Dispatcher:
-    def __init__(
-        self, wallet: BaseWallet, storage: BaseStorage
-    ):  # TODO: take in wallet impl as well
+    def __init__(self, wallet: BaseWallet, storage: BaseStorage):
         self.logger = logging.getLogger(__name__)
         self.wallet = wallet
         self.storage = storage
 
     async def dispatch(self, message: AgentMessage, message_sender: Callable):
+
+        if not message.handler:
+            self.logger.warning(f"No message handler registered for {message}")
+            return
+
         result_message = await message.handler.handle(self.wallet, self.storage)
         return result_message
 

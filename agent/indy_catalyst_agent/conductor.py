@@ -68,7 +68,6 @@ class Conductor:
         )
 
     async def inbound_message_router(self, wire_message_dict: Dict) -> None:
-        self.logger.info(wire_message_dict)
         try:
             # We accept plaintext message for the ui
             message = MessageFactory.make_message(wire_message_dict)
@@ -78,12 +77,7 @@ class Conductor:
                 message_bytes, wire_message_dict["to"], True
             )
             agent_message_dict = json.loads(agent_message_bytes.decode("utf8"))
-
-            self.logger.info(agent_message_dict)
-
             message = MessageFactory.make_message(agent_message_dict)
-
-            self.logger.info(message)
 
         result = await self.dispatcher.dispatch(message, self.outbound_message_router)
         # TODO: need to use callback instead?
