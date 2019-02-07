@@ -16,7 +16,7 @@ class ConnectHandler(BaseHandler):
         self.logger = logging.getLogger(__name__)
         self.message = message
 
-    async def handle(self, wallet: BaseWallet, storage: BaseStorage) -> State:
+    async def handle(self, wallet: BaseWallet, storage: BaseStorage, message_sender) -> State:
         await wallet.open()
 
         initialized = wallet.opened

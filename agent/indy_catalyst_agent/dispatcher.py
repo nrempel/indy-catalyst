@@ -12,7 +12,6 @@ from .wallet.base import BaseWallet
 
 from .messaging.agent_message import AgentMessage
 from .transport.outbound.message import OutboundMessage
-from .connection import Connection
 from .wallet.basic import BasicWallet
 from .storage.basic import BasicStorage
 from .wallet.basic import BasicWallet
@@ -30,7 +29,8 @@ class Dispatcher:
             self.logger.warning(f"No message handler registered for {message}")
             return
 
-        result_message = await message.handler.handle(self.wallet, self.storage)
+        result_message = await message.handler.handle(self.wallet, self.storage, message_sender)
+        
         return result_message
 
         # TODO:

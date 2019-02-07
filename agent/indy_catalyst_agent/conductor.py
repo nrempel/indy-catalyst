@@ -86,5 +86,5 @@ class Conductor:
 
     async def outbound_message_router(self, message: AgentMessage, connection) -> None:
         message_dict = message.serialize()
-        uri = connection.endpoint
+        uri = connection
         await self.outbound_transport_manager.send_message(message_dict, uri)

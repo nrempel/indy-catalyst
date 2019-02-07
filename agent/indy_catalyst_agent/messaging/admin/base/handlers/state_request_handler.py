@@ -16,7 +16,7 @@ class StateRequestHandler(BaseHandler):
         self.logger = logging.getLogger(__name__)
         self.message = message
 
-    async def handle(self, wallet: BaseWallet, storage: BaseStorage) -> State:
+    async def handle(self, wallet: BaseWallet, storage: BaseStorage, message_sender) -> State:
 
         message = State(content=StateContent(initialized=False))
         return message

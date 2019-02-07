@@ -22,7 +22,7 @@ class GenerateInviteHandler(BaseHandler):
         self.message = message
 
     async def handle(
-        self, wallet: BaseWallet, storage: BaseStorage
+        self, wallet: BaseWallet, storage: BaseStorage, message_sender
     ) -> ConnectionInvitation:
         await wallet.open()
 
